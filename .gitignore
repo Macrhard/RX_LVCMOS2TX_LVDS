@@ -1,0 +1,13 @@
+#ignore all files
+*
+#don't ignore dir
+!*/
+#don't ignore specify
+!.gitignore
+!*.v
+!*.vh
+!makefile
+!*.do
+!*.f
+!*.mif
+!*.bat
