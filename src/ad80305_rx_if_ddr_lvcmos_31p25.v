@@ -28,8 +28,13 @@ module ad80305_rx_if_ddr_lvcmos_31p25(
     );
 
 //--1,IDDR 输入
-wire [12:0] w_adc_data;
-assign w_adc_data = {i_rx_frame,i_rx_data};
+//DDIO_INPUT ip 需要下降沿采I_dat,上升沿采Q_dat才正确。
+reg [12:0] w_adc_data;
+//i_fpga_clk_125p是i_rx_clk的四倍，用i_fpga_clk_125p打一拍
+//正好将w_adc_data的i_data的中心与i_rx_clk的下降沿对齐
+//实现了下降沿采I_dat,上升沿采Q_dat
+always @ (posedge i_fpga_clk_125p) w_adc_data  <= {i_rx_frame,i_rx_data};   //i_tx_qdata ; 
+//assign w_adc_data = {i_rx_frame,i_rx_data};
     
 wire [12:0] dataout_h; 
 wire [12:0] dataout_l; 
